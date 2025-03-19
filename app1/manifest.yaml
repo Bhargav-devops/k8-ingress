@@ -15,16 +15,16 @@ spec:
         app: app1
     spec:
       containers:
-      - name: app1
-        image: korrai/app1:v1
-        imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: "50m"
-            memory: "128Mi"
-          limits:
-            cpu: "100m"
-            memory: "256Mi"
+        - name: app1
+          image: korrai/app1:v1
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "100m"
+              memory: "256Mi"
 ---
 apiVersion: v1
 kind: Service
@@ -34,9 +34,9 @@ spec:
   selector:
     app: app1
   ports:
-  - protocol: TCP
-    port: 80 #service-port
-    targetPort: 80 #container-port
+    - protocol: TCP
+      port: 80 #service-port
+      targetPort: 80 #container-port
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -50,13 +50,13 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: "app1.bhargavdevops.online"
+  - host: app1.bhargavdevops.online
     http:
       paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: app1
-            port:
-              number: 80
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: app1
+              port:
+                number: 80
